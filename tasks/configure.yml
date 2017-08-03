@@ -1,0 +1,18 @@
+---
+
+- name: Deploy Grafana configuration
+  become: yes
+  template:
+    dest: /etc/grafana/grafana.ini
+    src: grafana.ini.j2
+    owner: "{{ grafana.user }}"
+    group: "{{ grafana.group }}"
+  register: grafana_config
+
+# When grafana is using sqlite3 it can be started immediately, otherwise the start is skipped so the database and user can be created.
+- name: Start Grafana
+  become: yes
+  service:
+    name: grafana-server
+    state: restarted
+  when: grafana_config.changed and grafana.db.type == 'sqlite3'

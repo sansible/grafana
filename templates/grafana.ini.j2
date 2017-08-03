@@ -1,0 +1,16 @@
+#################################### Database ####################################
+[database]
+# You can configure the database connection by specifying type, host, name, user and password
+# as seperate properties or as on string using the url propertie.
+
+# Either "mysql", "postgres" or "sqlite3", it's your choice
+type = {{ grafana.db.type }} 
+host = {{ grafana.db.host }}:{{ grafana.db.port }}
+name = {{ grafana.db.name }}
+user = {{ grafana.db.user }}
+# If the password contains # or ; you have to wrap it with trippel quotes. Ex """#password;"""
+password = {{ grafana.db.password }}
+
+# Max conn setting default is 0 (mean not set)
+;max_idle_conn =
+;max_open_conn =
