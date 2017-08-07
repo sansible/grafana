@@ -1,0 +1,34 @@
+---
+
+- name: Test Grafana role
+  hosts: all
+
+  pre_tasks:
+    - name: Update apt
+      become: yes
+      apt:
+        cache_valid_time: 1800
+        update_cache: yes
+      tags:
+        - build
+
+  roles:
+    - role: sansible.grafana
+
+  post_tasks:
+    - name: Get Grafana Server state
+      become: yes
+      service:
+        name: grafana-server
+        state: started
+      register: status
+      tags:
+        - assert
+
+    - name: Assert that Grafana has been running
+      assert:
+        that:
+          - "false == status.changed"
+          - "'started' == status.state"
+      tags:
+        - assert

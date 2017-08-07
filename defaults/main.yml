@@ -1,0 +1,16 @@
+---
+
+grafana:
+  db:
+    host: localhost
+    name: grafana
+    password: grafana
+    port: 3306
+    type: sqlite3
+    user: grafana
+  group: grafana
+  path:
+    data: /var/lib/grafana
+    log: /var/log/grafana/grafana.log
+  user: grafana
+  version: 4.4.2

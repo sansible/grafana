@@ -1,0 +1,26 @@
+---
+
+- name: Add grafana apt repo
+  become: yes
+  apt_repository:
+    repo: deb https://packagecloud.io/grafana/stable/debian/ jessie main
+    state: present
+
+- name: Add apt key
+  become: yes
+  apt_key:
+    url: https://packagecloud.io/gpg.key
+    state: present
+
+- name: Install grafana
+  become: yes
+  apt:
+    update_cache: yes
+    pkg: "grafana={{ grafana.version }}"
+    state: present
+
+- name: Enable Grafana Server
+  become: yes
+  service:
+    name: grafana-server
+    enabled: yes
